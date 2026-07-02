@@ -76,27 +76,40 @@ export function AuthPage({ mode }: AuthPageProps) {
 
   return (
     <Box
+      className="min-h-dvh"
       sx={{
         minHeight: "100dvh",
         display: "grid",
         placeItems: "center",
-        px: 2,
-        py: 6,
+        px: { xs: 2, sm: 3 },
+        py: { xs: 4, sm: 6 },
         background:
-          "linear-gradient(135deg, rgba(86, 208, 106, 0.16), rgba(89, 168, 228, 0.18) 52%, #f6f8fb)",
+          "radial-gradient(circle at 30% 12%, #ECFDF5 0%, #EFF6FF 42%, #F8FAFC 100%)",
       }}
     >
-      <Card sx={{ width: "100%", maxWidth: 460 }}>
-        <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
-          <Stack spacing={3}>
+      <Card
+        className="w-full"
+        sx={{
+          width: "100%",
+          maxWidth: 440,
+          borderRadius: "24px",
+          boxShadow: "0 18px 50px rgba(15,23,42,.08)",
+        }}
+      >
+        <CardContent sx={{ p: { xs: 3, sm: 5 } }}>
+          <Stack spacing={3.5}>
             <Box>
-              <Typography component="p" color="secondary.dark" sx={{ mb: 1, fontWeight: 800 }}>
+              <Typography
+                component="p"
+                color="secondary.dark"
+                sx={{ mb: 1.25, fontSize: 18, fontWeight: 800, letterSpacing: 0 }}
+              >
                 Event Planner
               </Typography>
-              <Typography component="h1" variant="h1">
+              <Typography component="h1" variant="h1" sx={{ fontSize: { xs: 36, sm: 44 } }}>
                 {isRegister ? "Создайте аккаунт" : "Войдите в аккаунт"}
               </Typography>
-              <Typography color="text.secondary" sx={{ mt: 1 }}>
+              <Typography color="text.secondary" sx={{ mt: 1.5, fontSize: 15 }}>
                 {isRegister
                   ? "Сохраняйте личные события и управляйте расписанием."
                   : "Продолжите планирование своих событий."}
@@ -147,7 +160,7 @@ export function AuthPage({ mode }: AuthPageProps) {
               </Button>
             </Stack>
 
-            <Divider>или</Divider>
+            <Divider sx={{ color: "#94A3B8" }}>или</Divider>
 
             <Button variant="outlined" size="large" onClick={handleGoogle} startIcon={<Google />}>
               Войти через Google

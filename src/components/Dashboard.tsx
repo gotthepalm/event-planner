@@ -122,16 +122,29 @@ function DashboardContent() {
   };
 
   return (
-    <Box sx={{ minHeight: "100dvh", bgcolor: "background.default" }}>
+    <Box className="min-h-dvh" sx={{ minHeight: "100dvh", bgcolor: "background.default" }}>
       <AppBar
         position="sticky"
         color="inherit"
         elevation={0}
-        sx={{ borderBottom: "1px solid rgba(23,32,42,0.08)", backdropFilter: "blur(14px)" }}
+        sx={{
+          bgcolor: "rgba(255,255,255,.86)",
+          borderBottom: "1px solid #EEF2F6",
+          backdropFilter: "blur(10px)",
+        }}
       >
-        <Toolbar sx={{ gap: 2 }}>
+        <Toolbar sx={{ minHeight: { xs: 64, md: 72 }, gap: 2 }}>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="h3" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <Typography
+              variant="h3"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                fontSize: { xs: 20, md: 24 },
+                fontWeight: 800,
+              }}
+            >
               Event Planner
             </Typography>
             <Typography
@@ -143,17 +156,17 @@ function DashboardContent() {
               {user?.email ?? "Личные события"}
             </Typography>
           </Box>
-          <Button variant="contained" startIcon={<Add />} onClick={openCreate}>
+          <Button variant="contained" startIcon={<Add />} onClick={openCreate} sx={{ height: 44, px: 2.5 }}>
             Событие
           </Button>
-          <Button color="inherit" startIcon={<Logout />} onClick={logout}>
+          <Button color="inherit" startIcon={<Logout />} onClick={logout} sx={{ height: 44 }}>
             Выйти
           </Button>
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="xl" sx={{ py: { xs: 3, md: 4 } }}>
-        <Stack spacing={3}>
+      <Container maxWidth="xl" sx={{ py: { xs: 2.5, md: 5 } }}>
+        <Stack spacing={{ xs: 2.5, md: 4 }}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={2}
@@ -168,13 +181,26 @@ function DashboardContent() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search />
+                      <Search sx={{ color: "#94A3B8" }} />
                     </InputAdornment>
                   ),
                 },
               }}
             />
-            <FormControl sx={{ minWidth: { xs: "100%", md: 240 } }}>
+            <FormControl
+              sx={{
+                minWidth: { xs: "100%", md: 240 },
+                "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#2563EB",
+                },
+                "& .MuiInputBase-root.Mui-focused": {
+                  boxShadow: "0 0 0 4px rgba(37,99,235,.15)",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#2563EB",
+                },
+              }}
+            >
               <InputLabel id="importance-filter-label">Важность</InputLabel>
               <Select
                 labelId="importance-filter-label"
@@ -205,7 +231,7 @@ function DashboardContent() {
               <CircularProgress />
             </Box>
           ) : (
-            <Stack spacing={3}>
+            <Stack spacing={{ xs: 2.5, md: 5 }}>
               <EventCalendar events={filteredEvents} onSelectEvent={openEdit} />
               <EventList events={filteredEvents} onEdit={openEdit} onDelete={setDeletingEvent} />
             </Stack>

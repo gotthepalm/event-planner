@@ -99,6 +99,9 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
         paper: {
           sx: {
             width: { xs: "100%", sm: 480 },
+            borderTopLeftRadius: { xs: 0, sm: 20 },
+            borderBottomLeftRadius: { xs: 0, sm: 20 },
+            bgcolor: "#FFFFFF",
           },
         },
       }}
@@ -106,21 +109,23 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
       <Box component="form" onSubmit={submit} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
         <Stack
           direction="row"
-          sx={{ px: 3, py: 2.5, alignItems: "center", justifyContent: "space-between" }}
+          sx={{ px: { xs: 2.5, sm: 4 }, py: 3, alignItems: "center", justifyContent: "space-between" }}
         >
           <Box>
-            <Typography variant="h2">{event ? "Редактировать событие" : "Новое событие"}</Typography>
-            <Typography color="text.secondary" variant="body2">
+            <Typography variant="h2" sx={{ fontSize: 24, fontWeight: 700 }}>
+              {event ? "Редактировать событие" : "Новое событие"}
+            </Typography>
+            <Typography color="text.secondary" variant="body2" sx={{ mt: 0.5 }}>
               Заполните основные детали события.
             </Typography>
           </Box>
-          <IconButton aria-label="Закрыть" onClick={onClose} disabled={isSubmitting}>
+          <IconButton aria-label="Закрыть" onClick={onClose} disabled={isSubmitting} sx={{ width: 40, height: 40 }}>
             <Close />
           </IconButton>
         </Stack>
         <Divider />
 
-        <Stack spacing={2.5} sx={{ p: 3, flex: 1, overflowY: "auto" }}>
+        <Stack spacing={2} sx={{ p: { xs: 2.5, sm: 4 }, flex: 1, overflowY: "auto" }}>
           {submitError ? <Alert severity="error">{submitError}</Alert> : null}
 
           <Controller
@@ -160,7 +165,21 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
             name="importance"
             control={control}
             render={({ field }) => (
-              <FormControl fullWidth error={Boolean(errors.importance)}>
+              <FormControl
+                fullWidth
+                error={Boolean(errors.importance)}
+                sx={{
+                  "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#2563EB",
+                  },
+                  "& .MuiInputBase-root.Mui-focused": {
+                    boxShadow: "0 0 0 4px rgba(37,99,235,.15)",
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#2563EB",
+                  },
+                }}
+              >
                 <InputLabel id="importance-label">Важность</InputLabel>
                 <Select {...field} labelId="importance-label" label="Важность">
                   {importanceLevels.map((level) => (
@@ -192,7 +211,11 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
         </Stack>
 
         <Divider />
-        <Stack direction="row" spacing={1.5} sx={{ p: 2, justifyContent: "flex-end" }}>
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{ p: { xs: 2, sm: 2.5 }, bgcolor: "#FAFBFC", justifyContent: "flex-end" }}
+        >
           <Button onClick={onClose} disabled={isSubmitting}>
             Отмена
           </Button>

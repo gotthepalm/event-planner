@@ -30,11 +30,11 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <Dialog open={open} onClose={loading ? undefined : onClose} fullWidth maxWidth="xs">
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
+      <DialogTitle sx={{ px: 3.5, pt: 3.25, pb: 1, fontSize: 20, fontWeight: 700 }}>{title}</DialogTitle>
+      <DialogContent sx={{ px: 3.5, pb: 2.5 }}>
         <DialogContentText>{description}</DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ px: 3.5, py: 2.5, bgcolor: "#FAFBFC" }}>
         <Button onClick={onClose} disabled={loading}>
           Отмена
         </Button>

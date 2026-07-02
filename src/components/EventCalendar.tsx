@@ -20,6 +20,7 @@ import {
   format,
   isSameDay,
   isSameMonth,
+  isToday,
   startOfMonth,
   startOfWeek,
   subMonths,
@@ -30,6 +31,7 @@ import { useMemo, useState } from "react";
 import {
   importanceColors,
   importanceLabels,
+  type EventImportance,
   type PlannerEvent,
 } from "@/types/event";
 
@@ -39,6 +41,24 @@ type EventCalendarProps = {
 };
 
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+const eventStyles: Record<EventImportance, { backgroundColor: string; color: string; shadow: string }> = {
+  normal: {
+    backgroundColor: "#EFF6FF",
+    color: "#2563EB",
+    shadow: "rgba(37,99,235,.14)",
+  },
+  important: {
+    backgroundColor: "#FEF3C7",
+    color: "#D97706",
+    shadow: "rgba(217,119,6,.16)",
+  },
+  critical: {
+    backgroundColor: "#FEE2E2",
+    color: "#DC2626",
+    shadow: "rgba(220,38,38,.16)",
+  },
+};
 
 export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
   const [visibleMonth, setVisibleMonth] = useState(new Date());
@@ -56,22 +76,39 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
   }, [visibleMonth]);
 
   return (
-    <Paper sx={{ p: { xs: 2, md: 3 }, borderRadius: 2, border: "1px solid rgba(23,32,42,0.08)" }}>
-      <Stack direction="row" sx={{ mb: 2, alignItems: "center", justifyContent: "space-between" }}>
+    <Paper
+      className="w-full"
+      sx={{
+        p: { xs: 2.5, md: 3.5 },
+        borderRadius: "20px",
+        border: "1px solid #E8EDF3",
+        boxShadow: "0 8px 32px rgba(15,23,42,.06)",
+        bgcolor: "#FFFFFF",
+      }}
+    >
+      <Stack direction="row" sx={{ mb: 3, alignItems: "center", justifyContent: "space-between" }}>
         <Box>
-          <Typography variant="h2">Календарь</Typography>
-          <Typography color="text.secondary" variant="body2">
+          <Typography variant="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 700 }}>
+            Календарь
+          </Typography>
+          <Typography color="text.secondary" variant="body2" sx={{ mt: 0.25 }}>
             {format(visibleMonth, "LLLL yyyy", { locale: ru })}
           </Typography>
         </Box>
         <Stack direction="row" spacing={0.5}>
           <Tooltip title="Предыдущий месяц">
-            <IconButton onClick={() => setVisibleMonth((month) => subMonths(month, 1))}>
+            <IconButton
+              onClick={() => setVisibleMonth((month) => subMonths(month, 1))}
+              sx={{ width: 36, height: 36 }}
+            >
               <ChevronLeft />
             </IconButton>
           </Tooltip>
           <Tooltip title="Следующий месяц">
-            <IconButton onClick={() => setVisibleMonth((month) => addMonths(month, 1))}>
+            <IconButton
+              onClick={() => setVisibleMonth((month) => addMonths(month, 1))}
+              sx={{ width: 36, height: 36 }}
+            >
               <ChevronRight />
             </IconButton>
           </Tooltip>
@@ -82,7 +119,7 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
-          gap: 0.75,
+          gap: { xs: 0.75, sm: 1 },
         }}
       >
         {weekDays.map((day) => (
@@ -90,7 +127,7 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
             key={day}
             variant="caption"
             color="text.secondary"
-            sx={{ py: 0.75, fontWeight: 800, textAlign: "center" }}
+            sx={{ py: 0.75, fontWeight: 700, textAlign: "center", color: "#64748B" }}
           >
             {day}
           </Typography>
@@ -99,23 +136,29 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
         {days.map((day) => {
           const dayEvents = events.filter((event) => isSameDay(event.dateTime, day));
           const muted = !isSameMonth(day, visibleMonth);
+          const today = isToday(day);
 
           return (
             <Box
               key={day.toISOString()}
               sx={{
-                minHeight: { xs: 82, sm: 118 },
-                p: 1,
-                borderRadius: 1,
-                border: "1px solid rgba(23,32,42,0.08)",
-                bgcolor: muted ? "rgba(23,32,42,0.025)" : "#fff",
+                minHeight: { xs: 92, sm: 132 },
+                p: { xs: 1, sm: 1.25 },
+                borderRadius: "14px",
+                border: "1px solid #EEF2F6",
+                bgcolor: today ? "#EFF6FF" : muted ? "#FAFBFC" : "#FFFFFF",
                 overflow: "hidden",
+                transition: "background-color 180ms ease-out, border-color 180ms ease-out",
+                "&:hover": {
+                  bgcolor: today ? "#EFF6FF" : "#FAFBFC",
+                  borderColor: "#E2E8F0",
+                },
               }}
             >
               <Typography
                 variant="caption"
-                color={muted ? "text.disabled" : "text.secondary"}
-                sx={{ fontWeight: 800 }}
+                color={today ? "secondary.main" : muted ? "text.disabled" : "text.secondary"}
+                sx={{ fontWeight: today ? 800 : 700 }}
               >
                 {format(day, "d")}
               </Typography>
@@ -126,11 +169,23 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
                     label={`${format(event.dateTime, "HH:mm")} ${event.title}`}
                     size="small"
                     color={importanceColors[event.importance]}
-                    variant={event.importance === "normal" ? "outlined" : "filled"}
                     onClick={() => onSelectEvent(event)}
                     sx={{
+                      minHeight: 28,
                       maxWidth: "100%",
+                      borderRadius: "12px",
+                      bgcolor: eventStyles[event.importance].backgroundColor,
+                      color: eventStyles[event.importance].color,
+                      boxShadow: "inset 0 1px rgba(255,255,255,.4)",
+                      fontSize: 13,
+                      fontWeight: 500,
                       justifyContent: "flex-start",
+                      transition: "transform 180ms ease-out, box-shadow 180ms ease-out",
+                      "&:hover": {
+                        bgcolor: eventStyles[event.importance].backgroundColor,
+                        boxShadow: `inset 0 1px rgba(255,255,255,.4), 0 4px 12px ${eventStyles[event.importance].shadow}`,
+                        transform: "translateY(-1px)",
+                      },
                       "& .MuiChip-label": {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
