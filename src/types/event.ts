@@ -21,9 +21,9 @@ export type EventFormValues = {
 };
 
 export const importanceLabels: Record<EventImportance, string> = {
-  normal: "Обычная",
-  important: "Важная",
-  critical: "Критическая",
+  normal: "Normal",
+  important: "Important",
+  critical: "Critical",
 };
 
 export const importanceColors: Record<EventImportance, "default" | "warning" | "error"> = {

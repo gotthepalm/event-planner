@@ -59,7 +59,7 @@ export function AuthPage({ mode }: AuthPageProps) {
 
       router.replace("/");
     } catch (error) {
-      setSubmitError(getUserFriendlyError(error, "Не удалось выполнить действие. Попробуйте еще раз."));
+      setSubmitError(getUserFriendlyError(error, "Could not complete the action. Try again."));
     }
   });
 
@@ -70,7 +70,7 @@ export function AuthPage({ mode }: AuthPageProps) {
       await signInWithGoogle();
       router.replace("/");
     } catch (error) {
-      setSubmitError(getUserFriendlyError(error, "Google вход не выполнен. Попробуйте еще раз."));
+      setSubmitError(getUserFriendlyError(error, "Google sign-in failed. Try again."));
     }
   };
 
@@ -107,12 +107,12 @@ export function AuthPage({ mode }: AuthPageProps) {
                 Event Planner
               </Typography>
               <Typography component="h1" variant="h1" sx={{ fontSize: { xs: 36, sm: 44 } }}>
-                {isRegister ? "Создайте аккаунт" : "Войдите в аккаунт"}
+                {isRegister ? "Create an account" : "Sign in to your account"}
               </Typography>
               <Typography color="text.secondary" sx={{ mt: 1.5, fontSize: 15 }}>
                 {isRegister
-                  ? "Сохраняйте личные события и управляйте расписанием."
-                  : "Продолжите планирование своих событий."}
+                  ? "Save personal events and manage your schedule."
+                  : "Continue planning your events."}
               </Typography>
             </Box>
 
@@ -140,7 +140,7 @@ export function AuthPage({ mode }: AuthPageProps) {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Пароль"
+                    label="Password"
                     type="password"
                     autoComplete={isRegister ? "new-password" : "current-password"}
                     error={Boolean(errors.password)}
@@ -156,20 +156,20 @@ export function AuthPage({ mode }: AuthPageProps) {
                 disabled={isSubmitting}
                 startIcon={isRegister ? <PersonAdd /> : <Login />}
               >
-                {isRegister ? "Зарегистрироваться" : "Войти"}
+                {isRegister ? "Create account" : "Sign in"}
               </Button>
             </Stack>
 
-            <Divider sx={{ color: "#94A3B8" }}>или</Divider>
+            <Divider sx={{ color: "#94A3B8" }}>or</Divider>
 
             <Button variant="outlined" size="large" onClick={handleGoogle} startIcon={<Google />}>
-              Войти через Google
+              Sign in with Google
             </Button>
 
             <Typography color="text.secondary" sx={{ textAlign: "center" }}>
-              {isRegister ? "Уже есть аккаунт?" : "Нет аккаунта?"}{" "}
+              {isRegister ? "Already have an account?" : "No account yet?"}{" "}
               <Link href={isRegister ? "/login" : "/register"}>
-                {isRegister ? "Войти" : "Зарегистрироваться"}
+                {isRegister ? "Sign in" : "Create account"}
               </Link>
             </Typography>
           </Stack>

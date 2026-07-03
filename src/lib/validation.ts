@@ -3,13 +3,13 @@ import { z } from "zod";
 import { importanceLevels } from "@/types/event";
 
 export const authSchema = z.object({
-  email: z.string().trim().email("Введите корректный email"),
-  password: z.string().min(6, "Минимум 6 символов"),
+  email: z.string().trim().email("Enter a valid email address"),
+  password: z.string().min(6, "Use at least 6 characters"),
 });
 
 export const eventSchema = z.object({
-  title: z.string().trim().min(2, "Минимум 2 символа").max(120, "До 120 символов"),
-  dateTime: z.date({ error: "Выберите дату и время" }),
-  description: z.string().trim().max(1000, "До 1000 символов"),
+  title: z.string().trim().min(2, "Use at least 2 characters").max(120, "Use up to 120 characters"),
+  dateTime: z.date({ error: "Select a date and time" }),
+  description: z.string().trim().max(1000, "Use up to 1000 characters"),
   importance: z.enum(importanceLevels),
 });

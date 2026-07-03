@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Event Planner",
-  description: "Личный планировщик событий с Firebase и Firestore",
+  description: "Personal event planner with Firebase and Firestore",
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

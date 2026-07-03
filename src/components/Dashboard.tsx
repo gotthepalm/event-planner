@@ -63,7 +63,7 @@ function DashboardContent() {
         setLoadingEvents(false);
       },
       (error) => {
-        setEventsError(getUserFriendlyError(error, "Не удалось загрузить события. Попробуйте еще раз."));
+        setEventsError(getUserFriendlyError(error, "Could not load events. Try again."));
         setLoadingEvents(false);
       },
     );
@@ -95,7 +95,7 @@ function DashboardContent() {
 
   const handleSubmitEvent = async (values: EventFormValues) => {
     if (!user) {
-      throw new Error("Пользователь не авторизован.");
+      throw new Error("User is not authenticated.");
     }
 
     if (editingEvent) {
@@ -153,14 +153,14 @@ function DashboardContent() {
               component="p"
               sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
             >
-              {user?.email ?? "Личные события"}
+              {user?.email ?? "Personal events"}
             </Typography>
           </Box>
           <Button variant="contained" startIcon={<Add />} onClick={openCreate} sx={{ height: 44, px: 2.5 }}>
-            Событие
+            Event
           </Button>
           <Button color="inherit" startIcon={<Logout />} onClick={logout} sx={{ height: 44 }}>
-            Выйти
+            Sign out
           </Button>
         </Toolbar>
       </AppBar>
@@ -175,7 +175,7 @@ function DashboardContent() {
             <TextField
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Поиск по названию или описанию"
+              placeholder="Search by title or description"
               fullWidth
               slotProps={{
                 input: {
@@ -201,14 +201,14 @@ function DashboardContent() {
                 },
               }}
             >
-              <InputLabel id="importance-filter-label">Важность</InputLabel>
+              <InputLabel id="importance-filter-label">Importance</InputLabel>
               <Select
                 labelId="importance-filter-label"
-                label="Важность"
+                label="Importance"
                 value={importance}
                 onChange={(event) => setImportance(event.target.value as ImportanceFilter)}
               >
-                <MenuItem value="all">Все уровни</MenuItem>
+                <MenuItem value="all">All levels</MenuItem>
                 {importanceLevels.map((level) => (
                   <MenuItem key={level} value={level}>
                     {importanceLabels[level]}
@@ -219,9 +219,9 @@ function DashboardContent() {
           </Stack>
 
           <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", rowGap: 1 }}>
-            <Chip label={`Всего: ${events.length}`} />
-            <Chip color="secondary" label={`Показано: ${filteredEvents.length}`} />
-            <Chip color="primary" label="Данные только текущего пользователя" />
+            <Chip label={`Total: ${events.length}`} />
+            <Chip color="secondary" label={`Shown: ${filteredEvents.length}`} />
+            <Chip color="primary" label="Only current user's data" />
           </Stack>
 
           {eventsError ? <Alert severity="error">{eventsError}</Alert> : null}
@@ -248,13 +248,13 @@ function DashboardContent() {
       />
       <ConfirmDialog
         open={Boolean(deletingEvent)}
-        title="Удалить событие?"
+        title="Delete event?"
         description={
           deletingEvent
-            ? `Событие "${deletingEvent.title}" будет удалено без возможности восстановления.`
+            ? `Event "${deletingEvent.title}" will be permanently deleted.`
             : ""
         }
-        confirmText="Удалить"
+        confirmText="Delete"
         loading={deleting}
         onClose={() => setDeletingEvent(null)}
         onConfirm={handleDelete}

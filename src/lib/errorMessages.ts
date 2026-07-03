@@ -1,22 +1,22 @@
 import { FirebaseError } from "firebase/app";
 
 const authMessages: Record<string, string> = {
-  "auth/email-already-in-use": "Аккаунт с таким email уже существует.",
-  "auth/invalid-credential": "Неверный email или пароль.",
-  "auth/invalid-email": "Введите корректный email.",
-  "auth/network-request-failed": "Не удалось подключиться к серверу. Проверьте интернет-соединение.",
-  "auth/popup-closed-by-user": "Вход через Google был отменен.",
-  "auth/too-many-requests": "Слишком много попыток. Попробуйте позже.",
-  "auth/user-disabled": "Этот аккаунт отключен.",
-  "auth/user-not-found": "Неверный email или пароль.",
-  "auth/weak-password": "Пароль должен быть не короче 6 символов.",
-  "auth/wrong-password": "Неверный email или пароль.",
+  "auth/email-already-in-use": "An account with this email already exists.",
+  "auth/invalid-credential": "Invalid email or password.",
+  "auth/invalid-email": "Enter a valid email address.",
+  "auth/network-request-failed": "Could not connect to the server. Check your internet connection.",
+  "auth/popup-closed-by-user": "Google sign-in was canceled.",
+  "auth/too-many-requests": "Too many attempts. Try again later.",
+  "auth/user-disabled": "This account has been disabled.",
+  "auth/user-not-found": "Invalid email or password.",
+  "auth/weak-password": "Password must be at least 6 characters.",
+  "auth/wrong-password": "Invalid email or password.",
 };
 
 const firestoreMessages: Record<string, string> = {
-  "permission-denied": "У вас нет доступа к этим данным.",
-  unavailable: "Сервис временно недоступен. Попробуйте позже.",
-  "deadline-exceeded": "Сервер не ответил вовремя. Попробуйте еще раз.",
+  "permission-denied": "You do not have access to this data.",
+  unavailable: "The service is temporarily unavailable. Try again later.",
+  "deadline-exceeded": "The server took too long to respond. Try again.",
 };
 
 export function getUserFriendlyError(error: unknown, fallback: string): string {

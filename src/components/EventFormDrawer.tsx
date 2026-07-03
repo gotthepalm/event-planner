@@ -86,7 +86,7 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
       await onSubmit(values);
       onClose();
     } catch (error) {
-      setSubmitError(getUserFriendlyError(error, "Не удалось сохранить событие. Попробуйте еще раз."));
+      setSubmitError(getUserFriendlyError(error, "Could not save the event. Try again."));
     }
   });
 
@@ -113,13 +113,13 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
         >
           <Box>
             <Typography variant="h2" sx={{ fontSize: 24, fontWeight: 700 }}>
-              {event ? "Редактировать событие" : "Новое событие"}
+              {event ? "Edit event" : "New event"}
             </Typography>
             <Typography color="text.secondary" variant="body2" sx={{ mt: 0.5 }}>
-              Заполните основные детали события.
+              Fill in the event details.
             </Typography>
           </Box>
-          <IconButton aria-label="Закрыть" onClick={onClose} disabled={isSubmitting} sx={{ width: 40, height: 40 }}>
+          <IconButton aria-label="Close" onClick={onClose} disabled={isSubmitting} sx={{ width: 40, height: 40 }}>
             <Close />
           </IconButton>
         </Stack>
@@ -134,7 +134,7 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Название"
+                label="Title"
                 error={Boolean(errors.title)}
                 helperText={errors.title?.message}
                 fullWidth
@@ -147,7 +147,7 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
             control={control}
             render={({ field }) => (
               <DateTimePicker
-                label="Дата и время"
+                label="Date and time"
                 value={field.value}
                 onChange={field.onChange}
                 slotProps={{
@@ -180,8 +180,8 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
                   },
                 }}
               >
-                <InputLabel id="importance-label">Важность</InputLabel>
-                <Select {...field} labelId="importance-label" label="Важность">
+                <InputLabel id="importance-label">Importance</InputLabel>
+                <Select {...field} labelId="importance-label" label="Importance">
                   {importanceLevels.map((level) => (
                     <MenuItem key={level} value={level}>
                       {importanceLabels[level]}
@@ -199,7 +199,7 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Описание"
+                label="Description"
                 multiline
                 minRows={5}
                 error={Boolean(errors.description)}
@@ -217,10 +217,10 @@ export function EventFormDrawer({ event, onClose, onSubmit, open }: EventFormDra
           sx={{ p: { xs: 2, sm: 2.5 }, bgcolor: "#FAFBFC", justifyContent: "flex-end" }}
         >
           <Button onClick={onClose} disabled={isSubmitting}>
-            Отмена
+            Cancel
           </Button>
           <Button type="submit" variant="contained" disabled={isSubmitting} startIcon={<Save />}>
-            Сохранить
+            Save
           </Button>
         </Stack>
       </Box>

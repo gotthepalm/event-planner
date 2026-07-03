@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { format } from "date-fns";
-import { ru } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 
 import {
   importanceColors,
@@ -43,10 +43,10 @@ export function EventList({ events, onDelete, onEdit }: EventListProps) {
       <Stack direction="row" sx={{ mb: 3, alignItems: "center", justifyContent: "space-between" }}>
         <Box>
           <Typography variant="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 700 }}>
-            Список событий
+            Event list
           </Typography>
           <Typography color="text.secondary" variant="body2" sx={{ mt: 0.25 }}>
-            {events.length ? `Найдено: ${events.length}` : "Событий пока нет"}
+            {events.length ? `Found: ${events.length}` : "No events yet"}
           </Typography>
         </Box>
       </Stack>
@@ -67,7 +67,7 @@ export function EventList({ events, onDelete, onEdit }: EventListProps) {
           }}
         >
           <EventAvailable color="secondary" />
-          <Typography>Создайте первое событие или измените фильтры.</Typography>
+          <Typography>Create your first event or adjust the filters.</Typography>
         </Stack>
       ) : (
         <List disablePadding>
@@ -88,13 +88,13 @@ export function EventList({ events, onDelete, onEdit }: EventListProps) {
               }}
               secondaryAction={
                 <Stack direction="row" spacing={0.5}>
-                  <Tooltip title="Редактировать">
-                    <IconButton edge="end" aria-label="Редактировать" onClick={() => onEdit(event)}>
+                  <Tooltip title="Edit">
+                    <IconButton edge="end" aria-label="Edit" onClick={() => onEdit(event)}>
                       <Edit />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Удалить">
-                    <IconButton edge="end" aria-label="Удалить" color="error" onClick={() => onDelete(event)}>
+                  <Tooltip title="Delete">
+                    <IconButton edge="end" aria-label="Delete" color="error" onClick={() => onDelete(event)}>
                       <Delete />
                     </IconButton>
                   </Tooltip>
@@ -116,7 +116,7 @@ export function EventList({ events, onDelete, onEdit }: EventListProps) {
                 secondary={
                   <Stack spacing={0.7} sx={{ mt: 0.8, pr: 8 }}>
                     <Typography component="span" variant="body2" color="text.secondary">
-                      {format(event.dateTime, "d MMMM yyyy, HH:mm", { locale: ru })}
+                      {format(event.dateTime, "MMMM d, yyyy, HH:mm", { locale: enUS })}
                     </Typography>
                     {event.description ? (
                       <Typography component="span" variant="body2" color="text.secondary">

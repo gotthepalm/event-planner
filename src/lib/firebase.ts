@@ -29,7 +29,7 @@ export const db: Firestore | null = firebaseApp ? getFirestore(firebaseApp) : nu
 
 export function requireAuth(): Auth {
   if (!auth) {
-    throw new Error("Сервис авторизации временно недоступен.");
+    throw new Error("Authentication service is temporarily unavailable.");
   }
 
   return auth;
@@ -37,7 +37,7 @@ export function requireAuth(): Auth {
 
 export function requireDb(): Firestore {
   if (!db) {
-    throw new Error("Сервис хранения данных временно недоступен.");
+    throw new Error("Data storage service is temporarily unavailable.");
   }
 
   return db;

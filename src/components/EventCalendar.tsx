@@ -25,7 +25,7 @@ import {
   startOfWeek,
   subMonths,
 } from "date-fns";
-import { ru } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { useMemo, useState } from "react";
 
 import {
@@ -40,7 +40,7 @@ type EventCalendarProps = {
   onSelectEvent: (event: PlannerEvent) => void;
 };
 
-const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const eventStyles: Record<EventImportance, { backgroundColor: string; color: string; shadow: string }> = {
   normal: {
@@ -89,14 +89,14 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
       <Stack direction="row" sx={{ mb: 3, alignItems: "center", justifyContent: "space-between" }}>
         <Box>
           <Typography variant="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 700 }}>
-            Календарь
+            Calendar
           </Typography>
           <Typography color="text.secondary" variant="body2" sx={{ mt: 0.25 }}>
-            {format(visibleMonth, "LLLL yyyy", { locale: ru })}
+            {format(visibleMonth, "LLLL yyyy", { locale: enUS })}
           </Typography>
         </Box>
         <Stack direction="row" spacing={0.5}>
-          <Tooltip title="Предыдущий месяц">
+          <Tooltip title="Previous month">
             <IconButton
               onClick={() => setVisibleMonth((month) => subMonths(month, 1))}
               sx={{ width: 36, height: 36 }}
@@ -104,7 +104,7 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
               <ChevronLeft />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Следующий месяц">
+          <Tooltip title="Next month">
             <IconButton
               onClick={() => setVisibleMonth((month) => addMonths(month, 1))}
               sx={{ width: 36, height: 36 }}
@@ -118,8 +118,8 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(7, minmax(0, 1fr))",
-          gap: { xs: 0.75, sm: 1 },
+          gridTemplateColumns: { xs: "repeat(3, minmax(0, 1fr))", sm: "repeat(7, minmax(0, 1fr))" },
+          gap: { xs: 1, sm: 1 },
         }}
       >
         {weekDays.map((day) => (
@@ -127,7 +127,13 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
             key={day}
             variant="caption"
             color="text.secondary"
-            sx={{ py: 0.75, fontWeight: 700, textAlign: "center", color: "#64748B" }}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              py: 0.75,
+              fontWeight: 700,
+              textAlign: "center",
+              color: "#64748B",
+            }}
           >
             {day}
           </Typography>
@@ -142,8 +148,8 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
             <Box
               key={day.toISOString()}
               sx={{
-                minHeight: { xs: 92, sm: 132 },
-                p: { xs: 1, sm: 1.25 },
+                minHeight: { xs: 118, sm: 132 },
+                p: { xs: 1.25, sm: 1.25 },
                 borderRadius: "14px",
                 border: "1px solid #EEF2F6",
                 bgcolor: today ? "#EFF6FF" : muted ? "#FAFBFC" : "#FFFFFF",
@@ -171,14 +177,16 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
                     color={importanceColors[event.importance]}
                     onClick={() => onSelectEvent(event)}
                     sx={{
-                      minHeight: 28,
+                      minHeight: { xs: 32, sm: 28 },
+                      height: "auto",
                       maxWidth: "100%",
                       borderRadius: "12px",
                       bgcolor: eventStyles[event.importance].backgroundColor,
                       color: eventStyles[event.importance].color,
                       boxShadow: "inset 0 1px rgba(255,255,255,.4)",
-                      fontSize: 13,
+                      fontSize: { xs: 12, sm: 13 },
                       fontWeight: 500,
+                      alignItems: "flex-start",
                       justifyContent: "flex-start",
                       transition: "transform 180ms ease-out, box-shadow 180ms ease-out",
                       "&:hover": {
@@ -189,6 +197,12 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
                       "& .MuiChip-label": {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
+                        whiteSpace: { xs: "normal", sm: "nowrap" },
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: { xs: 2, sm: 1 },
+                        lineHeight: 1.25,
+                        py: { xs: 0.5, sm: 0 },
                       },
                     }}
                   />
@@ -196,7 +210,7 @@ export function EventCalendar({ events, onSelectEvent }: EventCalendarProps) {
                 {dayEvents.length > (compact ? 2 : 3) ? (
                   <Tooltip title={dayEvents.map((event) => `${event.title} - ${importanceLabels[event.importance]}`).join(", ")}>
                     <Typography variant="caption" color="text.secondary">
-                      еще {dayEvents.length - (compact ? 2 : 3)}
+                      more {dayEvents.length - (compact ? 2 : 3)}
                     </Typography>
                   </Tooltip>
                 ) : null}

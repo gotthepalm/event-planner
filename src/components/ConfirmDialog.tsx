@@ -36,7 +36,7 @@ export function ConfirmDialog({
       </DialogContent>
       <DialogActions sx={{ px: 3.5, py: 2.5, bgcolor: "#FAFBFC" }}>
         <Button onClick={onClose} disabled={loading}>
-          Отмена
+          Cancel
         </Button>
         <Button color="error" variant="contained" onClick={onConfirm} disabled={loading}>
           {confirmText}
